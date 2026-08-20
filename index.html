@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="An interactive titration curve visualizer for acid-base chemistry.">
+  <title>Marko's Titration Visualizer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">INTERACTIVE ACID–BASE LAB</p>
+        <h1>Marko's Titration Visualizer</h1>
+      </div>
+      <p class="hero-copy">Move across the curve to inspect the solution. Use the mouse wheel over the graph for fine control, then compare the species present at each stage.</p>
+    </header>
+
+    <nav class="tabs" aria-label="Titration type">
+      <button class="tab is-active" type="button" data-mode="strong-strong" aria-pressed="true">Strong–strong</button>
+      <button class="tab" type="button" data-mode="strong-weak" aria-pressed="false">Strong–weak</button>
+      <button class="tab" type="button" data-mode="weak-strong" aria-pressed="false">Weak–strong</button>
+      <button class="tab" type="button" data-mode="weak-weak" aria-pressed="false">Weak–weak</button>
+    </nav>
+
+    <section class="lab-card" aria-labelledby="mode-title">
+      <div class="lab-heading">
+        <div>
+          <h2 id="mode-title">Strong acid + strong base</h2>
+          <p id="mode-description">25.0 mL HCl titrated with NaOH</p>
+        </div>
+        <div class="stage-summary" aria-live="polite">
+          <span>REGION</span>
+          <strong id="region-label">Before equivalence</strong>
+        </div>
+      </div>
+
+      <div class="workspace">
+        <div class="chart-column">
+          <div class="chart-toolbar">
+            <span class="chart-legend">
+              <span class="curve-key"><i></i>Titration curve</span>
+              <span class="buffer-key" id="buffer-key" hidden><i></i>Buffer region</span>
+            </span>
+            <span id="equivalence-label">Equivalence: 25.0 mL</span>
+          </div>
+          <div class="chart-wrap" id="chart-wrap">
+            <canvas id="titration-chart" role="img" aria-label="Interactive titration curve with pH on the vertical axis and titrant volume on the horizontal axis"></canvas>
+            <div class="chart-tooltip" id="chart-tooltip" hidden>
+              <strong id="tooltip-ph">pH 1.00</strong>
+              <span id="tooltip-volume">0.0 mL added</span>
+            </div>
+          </div>
+          <p class="chart-help">Hover or drag to inspect · Scroll for fine control</p>
+        </div>
+
+        <aside class="inspector" aria-label="Selected point details">
+          <div class="selected-reading">
+            <span>SELECTED POINT</span>
+            <strong id="selected-ph">pH 1.00</strong>
+            <p id="selected-volume">0.0 mL NaOH added</p>
+          </div>
+
+          <div class="species-panel">
+            <div class="panel-title-row">
+              <h3>Solution composition</h3>
+              <span id="buffer-badge" class="buffer-badge" hidden>BUFFER</span>
+            </div>
+            <p id="species-note" class="species-note">Strong acid is in excess.</p>
+            <dl id="species-list" class="species-list"></dl>
+          </div>
+
+          <div class="milestone" id="milestone">
+            <span id="milestone-kicker">STARTING SOLUTION</span>
+            <p id="milestone-text">The pH is set by the initial strong acid concentration.</p>
+          </div>
+        </aside>
+      </div>
+
+      <div class="controls">
+        <label class="control">
+          <span><b id="analyte-label">HCl concentration</b><output id="analyte-output">0.100 mol/L</output></span>
+          <input id="analyte-concentration" type="range" min="0.020" max="0.250" step="0.005" value="0.100">
+          <small><span>0.020</span><span>0.250 mol/L</span></small>
+        </label>
+        <label class="control">
+          <span><b id="titrant-label">NaOH concentration</b><output id="titrant-output">0.100 mol/L</output></span>
+          <input id="titrant-concentration" type="range" min="0.020" max="0.250" step="0.005" value="0.100">
+          <small><span>0.020</span><span>0.250 mol/L</span></small>
+        </label>
+      </div>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
